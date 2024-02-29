@@ -9,10 +9,10 @@ import sun.security.util.Password;
 
 import java.time.Duration;
 
-public class config {
+public class config extends testData {
     public static WebDriver driver;
-    public static String STUDENT_EMAIL;
-    public static String STUDENT_PASSWORD;
+
+
 
     public static WebDriver setupBrowser (String driverType){
         if(driverType.equalsIgnoreCase("ch")){

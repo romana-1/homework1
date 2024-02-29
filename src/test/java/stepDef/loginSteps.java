@@ -28,7 +28,16 @@ public class loginSteps extends config {
         String businessAct = "Student Information";
         String developerCodeExp = driver.findElement(By.xpath("//*[@id='wrap']//h2")).getText();
         Assert.assertEquals(businessAct, developerCodeExp);
+
     }
+
+    @When("user clicks on login button")
+    public void userClicksOnLoginButton() {
+        driver.findElement(By.xpath("//input[@class='my-login']")).click();
+    }
+    }
+
+
    // @And("user enter invalid email address")
    // public void userEnterInvalidEmailAddress() {
     //    driver.findElement(By.name("email")).sendKeys("T123@gmail.com");
@@ -39,11 +48,7 @@ public class loginSteps extends config {
 
    // }
 
-    @When("user clicks on login button")
-    public void userClicksOnLoginButton() {
-        driver.findElement(By.xpath("//input[@class='my-login']")).click();
-    }
-    }
+
 
 //    @Then("user should be see {string} error massage")
 //    public void userShouldBeSeeErrorMassage(String arg0) throws InterruptedException {

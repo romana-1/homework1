@@ -1,8 +1,10 @@
 package stepDef;
 
 import base.config;
+import com.github.javafaker.Faker;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -13,35 +15,41 @@ import java.time.Year;
 import static base.config.driver;
 
 public class signupSteps extends config {
+    Faker faker = new Faker();
 
     @And("Student click on Create an new account button")
     public void studentClickOnCreateAnNewAccountButton() {
         driver.findElement(By.cssSelector("a[class='new-account']")).click();
     }
 
-    @And("user enter valid first name")
-    public void userEnterValidFirstName() {
-        driver.findElement(By.cssSelector("input[name='firstName']")).sendKeys("kam");
+    @And("user enter their first name")
+    public void userEnterTheirFirstName() {
+        STUDENT_FIRST_NAME = faker.name().firstName().replaceAll("[^a-zA-Z0-9]", "");
+        driver.findElement(By.name("firstName")).sendKeys(STUDENT_FIRST_NAME);
     }
 
-    @And("user enter valid last name")
-    public void userEnterValidLastName() {
-        driver.findElement(By.cssSelector("input[name='lastName']")).sendKeys("ROOM");
+    @And("user enter their last name")
+    public void userEnterTheirLastName() {
+        STUDENT_LAST_NAME = faker.name().lastName().replaceAll("[^a-zA-Z0-9]", "");
+        driver.findElement(By.name("lastName")).sendKeys(STUDENT_LAST_NAME);
     }
 
-    @And("user enter new valid email address")
-    public void userEnterNewValidEmailAddress() {
-        driver.findElement(By.name("email")).sendKeys("lanny1234@gmail.com");
+    @And("user enter new their email address")
+    public void userEnterNewTheirEmailAddress() {
+        STUDENT_RANDOM_EMAIL = STUDENT_FIRST_NAME.toLowerCase()+"."+STUDENT_LAST_NAME.toLowerCase()+faker.number().digits(4)+"@taltektc.com";
+        driver.findElement(By.name("email")).sendKeys(STUDENT_RANDOM_EMAIL);
     }
+
 
     @And("user enter a valid password")
     public void userEnterAValidPassword() {
-        driver.findElement(By.name("password")).sendKeys("12345678900");
+        driver.findElement(By.name("password")).sendKeys("1234567890");
+
     }
 
     @And("user enter valid confirm password")
     public void userEnterValidConfirmPassword() {
-        driver.findElement(By.name("confirmPassword")).sendKeys("12345678900");
+        driver.findElement(By.name("confirmPassword")).sendKeys("1234567890");
     }
 
     @And("user enter their month as {string} under dob")
@@ -62,21 +70,63 @@ public class signupSteps extends config {
         y.selectByVisibleText(enterYear);
     }
 
-    @And("user select a gender")
-    public void userSelectAGender() {
-        driver.findElement(By.id("female")).click();
+    @And("user enter their gender as {string}")
+    public void userEnterTheirGenderAs(String enterGender) {
+        String beforeValue = "//input[@id='";
+        String afterValue = "']";
+        String fullValue =beforeValue+enterGender+afterValue;
+        driver.findElement(By.xpath(fullValue)).click();
+
+    }
+    @And("user accept the term")
+    public void userAcceptTheTerm() {
+        driver.findElement(By.name("agree")).click();
+
     }
 
-
-        @And("user click the term and condition policy")
-    public void userClickTheTermAndConditionPolicy() {
-            driver.findElement(By.id("defaultCheck1")).click();
-    }
-    @And("user click on Create my account button")
+    @When("user click on Create my account button")
     public void userClickOnCreateMyAccountButton() {
         driver.findElement(By.cssSelector("button[type='submit']")).click();
     }
-}
+
+    @Then("the user should get unique student id with successful message")
+    public void theUserShouldGetUniqueStudentIdWithSuccessfulMessage() {
+        String studentIdFullText = driver.findElement(By.xpath("//div[@class='swal-text']")).getText();
+            STUDENT_RANDOM_ID = studentIdFullText.substring(studentIdFullText.indexOf(":") + 2);
+            System.out.println("Student Random Id is :==========+++++======>>> "+STUDENT_RANDOM_ID);
+        }
+
+    @And("student click on {string} button from popup modal")
+    public void studentClickOnButtonFromPopupModal(String buttonName) {
+        driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='"+buttonName+"'])")).click();
+    }
+
+    @And("student enter newly created student id")
+    public void studentEnterNewlyCreatedStudentId() {
+        driver.findElement(By.name("email")).sendKeys(STUDENT_RANDOM_EMAIL);
+
+    }
+
+    @And("student enter newly created password")
+    public void studentEnterNewlyCreatedPassword() {
+        driver.findElement(By.name("password")).sendKeys("1234567890");
+
+
+
+    }
+
+
+
+
+
+
+
+    }
+
+
+
+
+
 
 
 

@@ -6,18 +6,23 @@ Background:
 
   @test
   Scenario: User should be able to signup with valid credentials
-    And user enter valid first name
-    And user enter valid last name
-    And user enter new valid email address
+    And user enter their first name
+    And user enter their last name
+    And user enter new their email address
     And  user enter a valid password
     And  user enter valid confirm password
     And user enter their month as "Nov" under dob
     And user enter their day as '4' under dob
     And user enter their year as '1990' under dob
-    And user select a gender
-    And user click the term and condition policy
-    And user click on Create my account button
-  Then the user should be able to login successfully
+    And user enter their gender as "female"
+    And user accept the term
+    When user click on Create my account button
+    And student click on "OK" button from popup modal
+    And student enter newly created student id
+    And student enter newly created password
+    When user clicks on login button
+    Then the user should be able to login successfully
+
 
 #   Scenario:User should not be able to signup with  numeric first name
 #    And user enter numeric first name
