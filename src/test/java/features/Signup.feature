@@ -4,7 +4,7 @@ Background:
   Given user at TalentTEK Homepage
  And Student click on Create an new account button
 
-  @test
+
   Scenario: User should be able to signup with valid credentials
     And user enter their first name
     And user enter their last name
@@ -23,6 +23,22 @@ Background:
     When user clicks on login button
     Then the user should be able to login successfully
 
+  @Regression
+  Scenario:  User should not be able to signup with alphanumeric first name
+    And  user enter their alphanumeric first name
+    And  user enter their last name
+    And   user enter new their email address
+    And  user enter valid password
+    And  user enter valid confirm password
+    And  user enter their month as "Nov" under dob
+    And user enter their day as '4' under dob
+    And user enter their year as '1990' under dob
+    And user enter their gender as "female"
+    And  user accept the term
+    When  user click on Create my account button
+    Then user should receive First name  cannot contain alphanumeric characters
+
+
 
 #   Scenario:User should not be able to signup with  numeric first name
 #    And user enter numeric first name
@@ -34,7 +50,7 @@ Background:
 #     And  user select gender
 #     And  user click the term and condition policy
 #     And  user click on 'Create my account' button
-#     Then user should recive "First name and last name cannot contain numeric or spceial characters"
+#     Then user should receive "First name and last name cannot contain numeric or spceial characters"
 #
 #    Scenario:user should not be able to signup with numeric last name
 #      And user enter valid first name
@@ -60,31 +76,8 @@ Background:
 #      And  user click on create Account button
 #      Then user should recive "First name and last name cannot contain numeric or spceial characters"
 #
-#    Scenario:  User should not be able to signup with alphanumeric first name
-#      And  user enter alphanumeric first name
-#      And  user enter valid last name
-#      And  user enter valid email address
-#      And  user enter valid password
-#      And  user enter valid confirm password
-#      And  user select month, day, and year for date of birth
-#      And  user select gender
-#      And  user click the term and condition policy
-#      And  user click on create Account button
-#      Then user should recive "First name and last name cannot contain numeric or spceial characters"
-#
-#  Scenario:  User should not be able to signup with alphanumeric last name
-#    And  user enter valid first name
-#    And  user  enter alphanumeric last name
-#    And  user enter valid email address
-#    And  user enter valid password
-#    And  user enter valid confirm password
-#    And  user select month, day, and year for date of birth
-#    And  user select gender
-#    And  user click the term and condition policy
-#    And  user click on create Account button
-#    Then user should recive "First name and last name cannot contain numeric or spceial characters"
-#
-#  Scenario:  User should not be able to signup with an empty field
+
+##  Scenario:  User should not be able to signup with an empty field
 #    And  user enter empty first name
 #    And  user enter empty last name
 #    And  user enter valid email address

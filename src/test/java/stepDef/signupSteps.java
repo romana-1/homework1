@@ -11,6 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
 import java.time.Year;
+import java.util.regex.Pattern;
 
 import static base.config.driver;
 
@@ -36,7 +37,7 @@ public class signupSteps extends config {
 
     @And("user enter new their email address")
     public void userEnterNewTheirEmailAddress() {
-        STUDENT_RANDOM_EMAIL = STUDENT_FIRST_NAME.toLowerCase()+"."+STUDENT_LAST_NAME.toLowerCase()+faker.number().digits(4)+"@taltektc.com";
+        STUDENT_RANDOM_EMAIL = STUDENT_FIRST_NAME.toLowerCase() + "." + STUDENT_LAST_NAME.toLowerCase() + faker.number().digits(4) + "@taltektc.com";
         driver.findElement(By.name("email")).sendKeys(STUDENT_RANDOM_EMAIL);
     }
 
@@ -74,10 +75,11 @@ public class signupSteps extends config {
     public void userEnterTheirGenderAs(String enterGender) {
         String beforeValue = "//input[@id='";
         String afterValue = "']";
-        String fullValue =beforeValue+enterGender+afterValue;
+        String fullValue = beforeValue + enterGender + afterValue;
         driver.findElement(By.xpath(fullValue)).click();
 
     }
+
     @And("user accept the term")
     public void userAcceptTheTerm() {
         driver.findElement(By.name("agree")).click();
@@ -92,18 +94,18 @@ public class signupSteps extends config {
     @Then("the user should get unique student id with successful message")
     public void theUserShouldGetUniqueStudentIdWithSuccessfulMessage() {
         String studentIdFullText = driver.findElement(By.xpath("//div[@class='swal-text']")).getText();
-            STUDENT_RANDOM_ID = studentIdFullText.substring(studentIdFullText.indexOf(":") + 2);
-            System.out.println("Student Random Id is :==========+++++======>>> "+STUDENT_RANDOM_ID);
-        }
+        STUDENT_RANDOM_ID = studentIdFullText.substring(studentIdFullText.indexOf(":") + 2);
+        System.out.println("Student Random Id is :==========+++++======>>> " + STUDENT_RANDOM_ID);
+    }
 
     @And("student click on {string} button from popup modal")
     public void studentClickOnButtonFromPopupModal(String buttonName) {
-        driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='"+buttonName+"'])")).click();
+        driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='" + buttonName + "'])")).click();
     }
 
     @And("student enter newly created student id")
     public void studentEnterNewlyCreatedStudentId() {
-        driver.findElement(By.name("email")).sendKeys(STUDENT_RANDOM_EMAIL);
+        driver.findElement(By.name("email")).sendKeys(STUDENT_RANDOM_ID);
 
     }
 
@@ -112,16 +114,22 @@ public class signupSteps extends config {
         driver.findElement(By.name("password")).sendKeys("1234567890");
 
 
+    }
 
+    @And("user enter their alphanumeric first name")
+    public void userEnterTheirAlphanumericFirstName() {
+        STUDENT_FIRST_NAME = faker.name().firstName();
+        STUDENT_NAME_NUMARIC = STUDENT_FIRST_NAME + faker.number().digits(2);
+        driver.findElement(By.name("firstName")).sendKeys(STUDENT_NAME_NUMARIC);
     }
 
 
-
-
-
-
-
+    @Then("user should receive First name  cannot contain alphanumeric characters")
+    public void userShouldReceiveFirstNameCannotContainAlphanumericCharacters() {
+        driver.findElement(By.id("error-msg"));
     }
+}
+
 
 
 

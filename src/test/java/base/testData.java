@@ -8,4 +8,7 @@ public class testData {
     public static String STUDENT_FIRST_NAME;
     public static String STUDENT_LAST_NAME;
     public static String STUDENT_RANDOM_ID;
-}
+
+    public static String STUDENT_NAME_NUMARIC;
+    }
+
